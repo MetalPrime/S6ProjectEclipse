@@ -8,6 +8,8 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.google.gson.Gson;
+
 import processing.core.PApplet;
 
 public class Main extends PApplet{
@@ -20,6 +22,7 @@ public class Main extends PApplet{
 	private Socket socket;
 	private BufferedReader reader;
 	private BufferedWriter writer;
+	private Gson gson;
 	
 	public void settings() {
 		size(500, 500);
