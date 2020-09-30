@@ -22,18 +22,41 @@ public class Main extends PApplet{
 	private Socket socket;
 	private BufferedReader reader;
 	private BufferedWriter writer;
-	private Gson gson;
+	private int selectedText;
 	
 	public void settings() {
 		size(500, 500);
 	}
 	
 	public void setup() {
+		selectedText = 0;
 		initServer();
 	}
 	
 	public void draw() {
 		background(180);
+		
+		switch(selectedText) {
+		
+			case 0:
+				textSize(24);
+				fill(0);
+				textAlign(CENTER);
+				text("Ingrese su usuario y " + "\n" + "contraseña desde" + "\n" + "su teléfono móvil", width/2, height/2);
+			break;
+			case 1:
+				textSize(24);
+				fill(0);
+				textAlign(CENTER);
+				text("Usuario o Contraseña" + "\n" + "Inválidos, por favor" + "\n" + "intente de nuevo", width/2, height/2);
+			break;
+			case 2:
+				textSize(24);
+				fill(0);
+				textAlign(CENTER);
+				text("Bienvenido", width/2, height/2);
+			break;
+		}
 	}
 	
 	public void mouseClicked() {
@@ -65,6 +88,9 @@ public class Main extends PApplet{
 							String line = reader.readLine();
 							System.out.println("Recibido");
 							System.out.println("Recibido" + line + '\n');
+							 Gson gson = new Gson();
+							 User valitedUser = gson.fromJson(line, User.class);
+
 						}
 					} catch (Exception e) {
 						// TODO: handle exception
