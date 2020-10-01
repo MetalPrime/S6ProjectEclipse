@@ -65,14 +65,13 @@ public class Main extends PApplet{
 				fill(0);
 				textAlign(CENTER);
 				text("Usuario o Contraseña" + "\n" + "Inválidos, por favor" + "\n" + "intente de nuevo", width/2, height/2);
-				sendMessage("Usuario o Contraseña Inválidos");
+				sendMessage("");
 			break;
 			case 2:
 				textSize(24);
 				fill(0);
 				textAlign(CENTER);
 				text("Bienvenido", width/2, height/2);
-				sendMessage("Bienvenido");
 			break;
 		}
 	}
@@ -100,7 +99,6 @@ public class Main extends PApplet{
                         OutputStreamWriter osw = new OutputStreamWriter(os);
                         writer = new BufferedWriter(osw);
                         
-                        Thread.sleep(1000);
                         System.out.println("Esperando...");
 						
 						 
@@ -112,18 +110,26 @@ public class Main extends PApplet{
 							 Gson gson = new Gson();
 							 User valitedUser = gson.fromJson(line, User.class);
 							
-							Thread.sleep(2000);
 							if(line!=null) {
 								if(selectedText==1 || selectedText==0) {
 									 for(int i = 0; i<userBase.size() ; i++) {
 										 if(userBase.get(i).getUsername().equals(valitedUser.getUsername()) && userBase.get(i).getPassword().equals(valitedUser.getPassword())) {
 											 selectedText = 2;
 											 System.out.println("funciona");
+											 Gson gsonMsg = new Gson();
+											 Message msjPositive = new Message("Bienvenido");
+											 String returnMessage = gsonMsg.toJson(msjPositive);
+											 sendMessage(returnMessage);
 											 onActive = false;
+
 
 										 } else if(selectedText!=2){
 											 selectedText = 1;
 											 System.out.println("no funciona");
+											 Gson gsonMsg = new Gson();
+											 Message msjNegative = new Message("Usuario o Contraseña Inválidos");
+											 String returnMessage = gsonMsg.toJson(msjNegative);
+											 sendMessage(returnMessage);
 										 }
 										
 									 }
